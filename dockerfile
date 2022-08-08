@@ -4,7 +4,9 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && \
     apt -y upgrade && \
-    apt -y install sudo
+    apt -y install \
+    sudo \
+    mingw-w64
 
 # Setup default user
 ENV USER=developer
@@ -16,6 +18,7 @@ RUN cargo install cargo-expand && \
     rustup component add rust-src && \
     rustup component add rustfmt && \
     rustup component add clippy && \
+    rustup target add x86_64-pc-windows-gnu &&  \
     curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz -o /usr/bin/rust-analyzer.gz && \
     gzip -d /usr/bin/rust-analyzer.gz && \
     chown -R developer:developer /usr/bin/rust-analyzer && \
